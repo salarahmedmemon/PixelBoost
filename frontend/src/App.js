@@ -4,6 +4,8 @@ import { Navbar } from './components/Navbar';
 import { ImageUpload } from './components/ImageUpload';
 import { ImagePreview } from './components/ImagePreview';
 import { DownloadButton } from './components/DownloadButton';
+import dotenv from 'dotenv';
+dotenv.config();
 
 export const App = () => {
   const [originalImage, setOriginalImage] = useState(null);
@@ -31,7 +33,7 @@ export const App = () => {
     const base64Image = await toBase64(selectedFile);
 
     try {
-      const response = await axios.post('http://localhost:4851/api/enhance', { imageUrl: base64Image });
+      const response = await axios.post(`${process.env.API_URL}`, { imageUrl: base64Image });
 
       // ✅ Updated response key
       const enhancedUrl = response.data.enhancedImageUrl;
